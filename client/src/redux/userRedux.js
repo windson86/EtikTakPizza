@@ -14,15 +14,18 @@ export const loginUser = createAsyncThunk("users/login", async (user) => {
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    currentUser: null,
+    currentUser: {
+      isLogged: false,
+    },
     pending: false,
     error: false,
   },
   reducers: {
     logout: (state) => {
-      console.log("test prošao");
       window.localStorage.clear();
-      state.currentUser = null;
+      state.currentUser = {
+        isLogged: false,
+      };
       state.isLogged = false;
     },
   },
