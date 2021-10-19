@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import OnSale from '../components/OnSale'
 import Slider from '../components/Slider'
-
+import Footer from '../components/Footer'
 
 
 const Home = () => {
@@ -11,6 +11,7 @@ const Home = () => {
         <OnSale/>
         <Navbar/>
         <Slider/>
+        <Footer/>
         </div>
     )
 }

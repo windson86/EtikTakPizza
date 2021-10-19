@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Checkout from "./pages/Checkout"
 
 
 
@@ -23,6 +24,9 @@ const App = () => {
     <Route path="/login">{isLogged ? <Redirect to="/" /> : <Login />}</Route>
     <Route path="/register">
       {isLogged ? <Redirect to="/" /> : <Register />}
+    </Route>
+    <Route path="/checkout">
+      {!isLogged ? <Redirect to="/" /> : <Checkout />}
     </Route>
   </Switch>
 </Router>

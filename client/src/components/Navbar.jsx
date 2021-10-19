@@ -33,7 +33,7 @@ justify-content: space-evenly;
 const Logo = styled.h1`
 font-weight: bold;
 text-align: center;
-${mobile({ fontSize: "24px" })}
+${mobile({ fontSize: "16px" })}
 `
 const Center = styled.div`
 flex: 1;

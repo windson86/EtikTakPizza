@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const UserRoutes = require("./routes/UserRoutes");
 const AuthRoutes = require("./routes/auth");
+const stripeRoute = require("./routes/stripe");
 const PORT = process.env.PORT || 5000;
 dotenv.config();
 //mongo db
@@ -22,6 +23,7 @@ app.use(express.json());
 //routes
 app.use("/auth", AuthRoutes);
 app.use("/user", UserRoutes);
+app.use("/checkout", stripeRoute);
 app.use("/test", (req, res) =>
   res.status(200).json({ poruka: "šta bi ti ??" })
 );

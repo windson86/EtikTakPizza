@@ -4,10 +4,10 @@ import { mobile } from "../responsive";
 import {ArrowBackIosOutlined,ArrowForwardIosOutlined} from '@material-ui/icons'
 const Container=styled.div`
 width: 100%;
-height: 100vh;
+height: 80vh;
 display: flex;
-background-color: #eb9e82;
-${mobile({ display: "none" })}
+background-color: #f5ccbd;
+${mobile({ padding: "0px", flexDirection:"column" })}
 `
 const Arrow=styled.div`
 cursor: pointer;
