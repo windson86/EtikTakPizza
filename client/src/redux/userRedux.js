@@ -16,6 +16,7 @@ export const userSlice = createSlice({
   initialState: {
     currentUser: {
       isLogged: false,
+      accessToken: "",
     },
     pending: false,
     error: false,
