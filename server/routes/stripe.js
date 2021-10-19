@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const Stripe = require("stripe");
-const stripe = Stripe(
-  "sk_test_51JmDLKLa14A3QCJeFVVxHdkO0TlH28888JB31hNapC74yaGTxZp7VgjgSgKEgZcdGOpagF71sxituffWzBfMXIK300k55o10vA"
-);
+const stripe = Stripe(process.env.STRIPE_KEY);
 
 router.post("/payment", async (req, res) => {
   console.log(req.body);
@@ -27,10 +25,3 @@ router.post("/payment", async (req, res) => {
 });
 
 module.exports = router;
-
-stripe.charges.create({
-  amount: 2000,
-  currency: "eur",
-  source: "tok_amex", // obtained with Stripe.js
-  metadata: { order_id: "6735" },
-});
