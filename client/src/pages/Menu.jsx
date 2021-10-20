@@ -10,7 +10,7 @@ import PizzaInfo from "../components/PizzaInfo"
 const Container = styled.div`
 max-height: 60px;
 background-color: #ffffff;
-${mobile({ height: "50px" })}
+
 `
 
 const Menu=()=>{

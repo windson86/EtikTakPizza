@@ -6,7 +6,7 @@ import OnSale from '../components/OnSale'
 import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
-import {userRequest} from "../requestMetods"
+import {userRequest,publicRequest} from "../requestMetods"
 import { useHistory } from "react-router";
 import {clearCart} from "../redux/cartRedux"
 
@@ -166,7 +166,7 @@ const Checkout = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
   const dispatch = useDispatch();
-  const [pizzaSize, setSize] = useState("");
+  //const [pizzaSize, setSize] = useState("");
   const onToken = (token) => {
     setStripeToken(token);
   };
@@ -174,19 +174,20 @@ const Checkout = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("/checkout/payment", {
+        const res = await publicRequest.post("checkout/payment", {
           tokenId: stripeToken.id,
           amount: cart.total,
         });
-        const { size, ...others } = cart.products;
+        console.log(res)
+        //const { size, ...others } = cart.products;
         history.push("/success", {
           stripeData: res.data,
          
-          products: {size:pizzaSize,...others}, });
+          products: cart.products, });
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, history,pizzaSize]);
+  }, [stripeToken, cart, history]);
   const emptyCart=()=>{
     console.log("emptyCart")
       dispatch(clearCart())
@@ -220,7 +221,7 @@ const Checkout = () => {
                   
                    
                     <ProductSize>
-                    <FilterSize onChange={(e) => setSize(e.target.value)}>
+                    <FilterSize >
                 {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
@@ -268,7 +269,7 @@ const Checkout = () => {
               description={`Ukupno za platiti €${cart.total}`}
               amount={cart.total * 100}
               token={onToken}
-              stripeKey="pk_test_51JmDLKLa14A3QCJe6pB4Jybqei88xMDIIPTAHdhl9fbH6zaQDyxmTorl1NtwAWQ5qlDT7HPb13LnfoIlkIgjeVJf00zA9Ggmk3"
+              stripeKey="pk_live_51JmDLKLa14A3QCJeBvbyQsMTF0o3hL2LjnPi4UWLNmq4kiArf9KXnxsFziMeok05lXgU1WdbDcZ8gguklnSPQsaO000MYJLoeQ"
             >
               <Button>Plati</Button>
             </StripeCheckout>
