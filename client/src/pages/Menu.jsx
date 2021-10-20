@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar"
 import OnSale from "../components/OnSale"
-import { mobile } from '../responsive'
+
 import styled from 'styled-components'
 import { getFavoritePizzas } from "../redux/ApiCalls"
 import { useEffect } from "react"
