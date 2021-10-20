@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import PizzaInfo from "../components/PizzaInfo"
 
 const Container = styled.div`
-max-height: 60px;
+
 background-color: #ffffff;
 
 `

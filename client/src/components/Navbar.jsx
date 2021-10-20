@@ -12,9 +12,6 @@ import {logout} from "../redux/userRedux"
  
 const Container = styled.div`
 height: 60px;
-display: flex;
-justify-content: space-evenly;
-
 background-color: #ffffff;
 ${mobile({ height: "50px" })}
 `
@@ -43,7 +40,6 @@ ${mobile({ fontSize: "12px" })}
 const Center = styled.div`
 flex: 1;
 align-items: center;
-
 `
 const Right = styled.div`
 flex: 1;
