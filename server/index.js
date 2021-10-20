@@ -1,4 +1,4 @@
-const express = require("express");
+/* const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -30,4 +30,19 @@ app.use("/test", (req, res) =>
 //server start
 app.listen(PORT, () => {
   console.log(`Backend server is running on port ${PORT}!!`);
-});
+}); */
+const dotenv = require("dotenv");
+dotenv.config();
+let env = process.env.NODE_ENV || "development";
+
+let settings = require("./config/settings")[env];
+
+const app = require("express")();
+
+require("./config/database")(settings);
+require("./config/express")(app);
+require("./config/routes")(app);
+
+app.listen(settings.port);
+
+console.log(`Server listening on port ${settings.port}...`);

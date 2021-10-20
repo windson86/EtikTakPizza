@@ -52,7 +52,7 @@ router.post("/login", passwordValidator, async (req, res) => {
     const inputPassword = req.body.password;
 
     if (originalPassword != inputPassword) {
-      return res.status(401).json({ err: "Wrong Password" });
+      return res.status(402).json({ err: "Wrong Password" });
     }
 
     const accessToken = jwt.sign(

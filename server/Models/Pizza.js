@@ -1,14 +1,88 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose");
 
-const PizzaSchema=new mongoose.Schema(
-    {
-        title: {type: String , required:true,unique:true},
-        desc:{type:String,required:true},
-        img:{type:String},
-        size:{type:String},
-        price:{type:Number,required:true}
-    },
-    {timestamps=true}
-)
+const REQUIRED_VALIDATION_MESSAGE = "{PATH} is required";
 
-module.exports= mongoose.model("Pizza",PizzaSchema)
+let PizzaSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
+    desc: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
+    img: { type: String },
+    size: { type: String },
+    price: { type: Number, required: REQUIRED_VALIDATION_MESSAGE },
+    ingredients: { type: Array },
+    likes: [],
+    reviews: [],
+  },
+  { timestamps: true }
+);
+let Pizza = mongoose.model("Pizza", PizzaSchema);
+
+module.exports = Pizza;
+
+const pizzasSeed = [
+  {
+    name: "Caprichosa/Mješana",
+    ingredients: ["origano", "šunka", "sir", "paradajz sos", "gljive"],
+    desc: "Najprodavanija Pizza u okolici",
+    price: 5.4,
+
+    img: "https://vignette.wikia.nocookie.net/oddsquad/images/f/f4/Pizza.png/revision/latest?cb=20170203223737",
+    likes: [],
+    reviews: [],
+  },
+  {
+    name: "Margarita",
+    ingredients: ["origano", "sir", "paradajz sos"],
+    desc: "originalna Talijanska receptura pizze",
+    price: 5.01,
+
+    img: "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3469401.jpg",
+    likes: [],
+    reviews: [],
+  },
+  {
+    name: "Picante",
+    ingredients: [
+      "origano",
+      "šunka",
+      "gljive",
+      "ljuti feferoni",
+      "sir",
+      "paradajz umak",
+      "panceta",
+    ],
+    desc: "najdraža pizza kreatora stranice i odlična uz dobru pivu",
+    price: 5.89,
+
+    img: "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
+    likes: [],
+    reviews: [],
+  },
+  {
+    name: "Test Pizza za naplatu",
+    ingredients: [
+      "origano",
+      "šunka",
+      "gljive",
+      "ljuti feferoni",
+      "sir",
+      "paradajz umak",
+      "panceta",
+    ],
+    desc: "najdraža pizza kreatora stranice i odlična uz dobru pivu",
+    price: 0.02,
+
+    img: "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
+    likes: [],
+    reviews: [],
+  },
+];
+
+module.exports.seedPizzas = () => {
+  Pizza.find({}).then((pizzas) => {
+    if (pizzas.length > 0) return;
+    Pizza.create(pizzasSeed)
+      .then(() => console.log("Seeded pizzas successfully."))
+      .catch((error) => console.log(error));
+  });
+};

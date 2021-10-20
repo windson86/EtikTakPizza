@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build" : "npm install ",
+    "build": "npm install ",
     "start": "node index.js",
     "dev": "concurrently -n 'server,client' -c 'green,red' \"nodemon index.js\" \"cd ../client && yarn start\""
   },
@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "nodemon": "^2.0.13",
+    "path": "^0.12.7",
     "stripe": "^8.183.0",
     "validator": "^13.6.0"
   }
