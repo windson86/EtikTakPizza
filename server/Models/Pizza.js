@@ -21,7 +21,7 @@ module.exports = Pizza;
 
 const pizzasSeed = [
   {
-    name: "Caprichosa/Mješana",
+    name: "Caprichosa/Miješana",
     ingredients: ["origano", "šunka", "sir", "paradajz sos", "gljive"],
     desc: "Najprodavanija Pizza u okolici",
     price: 5.4,

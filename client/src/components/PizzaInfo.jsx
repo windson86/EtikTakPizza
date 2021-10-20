@@ -41,18 +41,21 @@ const Container = styled.div`
   }
 `;
 
-/* const Circle = styled.div`
+ /* const Circle = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 50%;
   background-color: white;
   position: absolute;
+`; */
+const ImgContainer = styled.div`
+  height: 100%;
+  flex: 1;
 `;
-
 const Image = styled.img`
   height: 75%;
   z-index: 2;
-`; */
+`; 
 
 const Icon = styled.div`
   width: 40px;
@@ -100,7 +103,9 @@ const PizzaInfo=({pizza})=>{
             <FavoriteBorderOutlined />
           </Icon>
         </Info>
-        
+       {pizza &&<ImgContainer>
+              <Image src={pizza.img} />
+            </ImgContainer>}
        {pizza && <SpanBig>{pizza.name}</SpanBig>}
        {pizza &&<Span>{pizza.desc}</Span>}
        {pizza && <Span>Cijena{" "}{pizza.price.toFixed(2)}€</Span>}

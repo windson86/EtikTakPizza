@@ -34,7 +34,7 @@ justify-content: space-evenly;
 const Logo = styled.h1`
 font-weight: bold;
 text-align: center;
-${mobile({ fontSize: "16px" })}
+${mobile({ fontSize: "12px" })}
 `
 const Center = styled.div`
 flex: 1;
@@ -101,7 +101,7 @@ const Navbar = () => {
            <Center><Logo>Tik Tak Pizza</Logo></Center>
            
            <Right>
-                <NavItem>Menu</NavItem>
+                <NavItem>Jelovnik</NavItem>
                { isLogged && <NavItem>Orders</NavItem>}
                { isLogged && <Link style={{ textDecoration: 'none' }} to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
                

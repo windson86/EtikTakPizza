@@ -1,5 +1,5 @@
-import { Add, Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+
+import { useSelector,useDispatch } from "react-redux";
 import styled from "styled-components";
 import Navbar from '../components/Navbar'
 import OnSale from '../components/OnSale'
@@ -8,6 +8,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import {userRequest} from "../requestMetods"
 import { useHistory } from "react-router";
+import {clearCart} from "../redux/cartRedux"
 
 
 
@@ -91,7 +92,7 @@ const Details = styled.div`
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
+
 
 /* const ProductColor = styled.div`
   width: 20px;
@@ -110,18 +111,6 @@ const PriceDetail = styled.div`
   justify-content: center;
 `;
 
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
-`;
-
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
@@ -129,7 +118,7 @@ const ProductPrice = styled.div`
 `;
 
 const Hr = styled.hr`
-  background-color: #a71b1b;
+ 
   border: none;
   height: 1px;
 `;
@@ -170,6 +159,7 @@ const Checkout = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -189,6 +179,10 @@ const Checkout = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart, history,]);
+  const emptyCart=()=>{
+    console.log("emptyCart")
+      dispatch(clearCart())
+  }
 
  
   return (<div>
@@ -215,9 +209,7 @@ const Checkout = () => {
                     <ProductName>
                       <b>Pizza:</b> {product.name}
                     </ProductName>
-                    <ProductId>
-                      <b>ID:</b> {product._id}
-                    </ProductId>
+                  
                    
                     <ProductSize>
                       <b>Velicina:</b> {product.size}
@@ -225,11 +217,7 @@ const Checkout = () => {
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
-                  </ProductAmountContainer>
+                  
                   <ProductPrice>
                     € {product.price * 1}
                   </ProductPrice>
@@ -237,7 +225,9 @@ const Checkout = () => {
               </Product>
             ))}
             <Hr />
-          </Info></Center>
+          </Info>
+          <TopButton onClick={()=>emptyCart()}>isprazni</TopButton>
+          </Center>
         <Bottom>
           
           <Summary>

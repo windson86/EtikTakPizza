@@ -23,7 +23,7 @@ export const userSlice = createSlice({
   },
   reducers: {
     logout: (state) => {
-      window.localStorage.clear();
+      window.localStorage.removeItem("persist:root");
       state.currentUser = {
         isLogged: false,
       };
