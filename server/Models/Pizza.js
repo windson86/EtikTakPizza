@@ -7,7 +7,7 @@ let PizzaSchema = new mongoose.Schema(
     name: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
     desc: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
     img: { type: String },
-    size: { type: String },
+    size: { type: Array },
     price: { type: Number, required: REQUIRED_VALIDATION_MESSAGE },
     ingredients: { type: Array },
     likes: [],
