@@ -12,7 +12,7 @@ font-weight: 500;
 
 const OnSale = () => {
     return (
-        <Container>Order Online for free</Container>
+        <Container>Prva pizzerija gdje je moguće platiti Online karticama</Container>
     )
 }
 

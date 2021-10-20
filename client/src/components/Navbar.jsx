@@ -101,7 +101,10 @@ const Navbar = () => {
            <Center><Logo>Tik Tak Pizza</Logo></Center>
            
            <Right>
-                <NavItem>Jelovnik</NavItem>
+           {isLogged && 
+           <Link style={{ textDecoration: 'none',textDecorationStyle:"none" }} to="/menu">  
+            <NavItem>Menu</NavItem>
+            </Link>} 
                { isLogged && <NavItem>Orders</NavItem>}
                { isLogged && <Link style={{ textDecoration: 'none' }} to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
                

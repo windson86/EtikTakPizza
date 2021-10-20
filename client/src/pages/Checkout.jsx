@@ -147,6 +147,12 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
+const FilterSize = styled.select`
+  margin-left: 10px;
+  padding: 5px;
+`;
+const FilterSizeOption = styled.option``;
+
 const Button = styled.button`
   width: 100%;
   padding: 10px;
@@ -160,7 +166,7 @@ const Checkout = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const [pizzaSize, setSize] = useState("");
   const onToken = (token) => {
     setStripeToken(token);
   };
@@ -172,13 +178,15 @@ const Checkout = () => {
           tokenId: stripeToken.id,
           amount: cart.total,
         });
+        const { size, ...others } = cart.products;
         history.push("/success", {
           stripeData: res.data,
-          products: cart.products, });
+         
+          products: {size:pizzaSize,...others}, });
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, history,]);
+  }, [stripeToken, cart, history,pizzaSize]);
   const emptyCart=()=>{
     console.log("emptyCart")
       dispatch(clearCart())
@@ -212,7 +220,11 @@ const Checkout = () => {
                   
                    
                     <ProductSize>
-                      <b>Velicina:</b> {product.size}
+                    <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
+              </FilterSize>
                     </ProductSize>
                   </Details>
                 </ProductDetail>

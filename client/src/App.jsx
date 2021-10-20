@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout"
 import Success from "./pages/Success";
-
+import Menu from "./pages/Menu";
 
 const App = () => {
   const {isLogged} = useSelector((state) => state.user);
@@ -31,6 +31,9 @@ const App = () => {
     <Route path="/success">
           <Success />
         </Route>
+        <Route path="/menu">
+      {!isLogged ? <Redirect to="/" /> : <Menu />}
+    </Route>
   </Switch>
 </Router>
 };

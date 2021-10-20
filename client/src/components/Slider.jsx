@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import styled from "styled-components";
 
 import { mobile } from "../responsive";
+import { addProduct } from "../redux/cartRedux";
 
 const Container = styled.div`
   width: 100%;
@@ -112,16 +113,16 @@ const Slider = () => {
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-        {pizzas.map((item) => (
-          <Slide  key={item.id}>
+        {pizzas.map((pizza) => (
+          <Slide  key={pizza._id}>
             <ImgContainer>
-              <Image src={item.img} />
+              <Image src={pizza.img} />
             </ImgContainer>
             <InfoContainer>
-              <Title>{item.name}</Title>
-              <Desc>{item.ingredients.join(", ")}</Desc>
-              <Desc>{item.desc}</Desc>
-              <Button>Naruči</Button>
+              <Title>{pizza.name}</Title>
+              <Desc>{pizza.ingredients.join(", ")}</Desc>
+              <Desc>{pizza.desc}</Desc>
+              <Button onClick={()=>dispatch(addProduct({pizza}))}>Naruči</Button>
             </InfoContainer>
           </Slide>
         ))}

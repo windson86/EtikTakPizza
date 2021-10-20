@@ -53,10 +53,10 @@ const ImgContainer = styled.div`
   flex: 1;
 `;
 const Image = styled.img`
-  height: 75%;
+  height: 30vh;
   z-index: 2;
 `; 
-
+ 
 const Icon = styled.div`
   width: 40px;
   height: 40px;
@@ -74,9 +74,11 @@ const Icon = styled.div`
 `;
 const Span = styled.span`
 text-align :center;
+flex: 4;
 `
 const SpanBig = styled.span`
 font-size: 24px;
+flex: 2;
 `
 
 
@@ -108,7 +110,7 @@ const PizzaInfo=({pizza})=>{
             </ImgContainer>}
        {pizza && <SpanBig>{pizza.name}</SpanBig>}
        {pizza &&<Span>{pizza.desc}</Span>}
-       {pizza && <Span>Cijena{" "}{pizza.price.toFixed(2)}€</Span>}
+       {pizza && <Span>Cijena{" "}{pizza.price.toFixed(2)}€ or ~{" "}{(pizza.price*7.43).toFixed(2)}Kn </Span>}
        {pizza &&<Span>Sastojci:{" "}{pizza.ingredients.join(", ")}</Span>}
        {pizza && <Span>Lajkova:{" "}{pizza.likes.length}</Span>}
         
