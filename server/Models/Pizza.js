@@ -25,7 +25,7 @@ const pizzasSeed = [
     ingredients: ["origano", "šunka", "sir", "paradajz sos", "gljive"],
     desc: "Najprodavanija Pizza u okolici",
     price: 5.4,
-
+    size: ["mala", "normalna", "jumbo"],
     img: "https://vignette.wikia.nocookie.net/oddsquad/images/f/f4/Pizza.png/revision/latest?cb=20170203223737",
     likes: [],
     reviews: [],
@@ -35,7 +35,7 @@ const pizzasSeed = [
     ingredients: ["origano", "sir", "paradajz sos"],
     desc: "originalna Talijanska receptura pizze",
     price: 5.01,
-
+    size: ["mala", "normalna", "jumbo"],
     img: "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX3469401.jpg",
     likes: [],
     reviews: [],
@@ -53,7 +53,7 @@ const pizzasSeed = [
     ],
     desc: "najdraža pizza kreatora stranice i odlična uz dobru pivu",
     price: 5.89,
-
+    size: ["mala", "normalna", "jumbo"],
     img: "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
     likes: [],
     reviews: [],
@@ -71,7 +71,7 @@ const pizzasSeed = [
     ],
     desc: "najdraža pizza kreatora stranice i odlična uz dobru pivu",
     price: 0.02,
-
+    size: ["mala", "normalna", "jumbo"],
     img: "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
     likes: [],
     reviews: [],
