@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout"
-
+import Success from "./pages/Success";
 
 
 const App = () => {
@@ -28,6 +28,9 @@ const App = () => {
     <Route path="/checkout">
       {!isLogged ? <Redirect to="/" /> : <Checkout />}
     </Route>
+    <Route path="/success">
+          <Success />
+        </Route>
   </Switch>
 </Router>
 };

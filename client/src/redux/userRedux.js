@@ -63,12 +63,8 @@ export const userSlice = createSlice({
 });
 
 const setDataToStorage = (payload) => {
-  window.localStorage.setItem("CurrentUser", payload.currentUser);
   window.localStorage.setItem("accessToken", payload.accessToken);
 };
 
-/* const logout = () => {
-  window.localStorage.clear();
-}; */
 export const { logout } = userSlice.actions;
 export default userSlice.reducer;

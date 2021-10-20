@@ -18,7 +18,7 @@ const Container = styled.div`
   background-size: cover;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const Wrapper = styled.div`
@@ -47,7 +47,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 80%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
@@ -91,6 +91,7 @@ const Login = () => {
         <Form>
           <Input
             placeholder="email"
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input

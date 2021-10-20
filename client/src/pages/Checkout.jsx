@@ -43,11 +43,18 @@ const TopButton = styled.button`
 const TopTexts = styled.div`
   ${mobile({ display: "none" })}
 `;
-const TopText = styled.span`
+/* const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0px 10px;
+`; */
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 `;
+
 
 const Bottom = styled.div`
   display: flex;
@@ -72,6 +79,7 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  height: 80px;
 `;
 
 const Details = styled.div`
@@ -85,12 +93,12 @@ const ProductName = styled.span``;
 
 const ProductId = styled.span``;
 
-const ProductColor = styled.div`
+/* const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
-`;
+`; */
 
 const ProductSize = styled.span``;
 
@@ -121,7 +129,7 @@ const ProductPrice = styled.div`
 `;
 
 const Hr = styled.hr`
-  background-color: #eee;
+  background-color: #a71b1b;
   border: none;
   height: 1px;
 `;
@@ -158,7 +166,7 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const Cart = () => {
+const Checkout = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
@@ -172,15 +180,15 @@ const Cart = () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: 500,
+          amount: cart.total,
         });
         history.push("/success", {
           stripeData: res.data,
-          products: cart, });
+          products: cart.products, });
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, history]);
+  }, [stripeToken, cart, history,]);
 
  
   return (<div>
@@ -190,31 +198,29 @@ const Cart = () => {
      
      
       <Wrapper>
-        <Title>YOUR BAG</Title>
+        <Title>Narudzba</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton>natrag na jelovnik</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            besplatna dostava
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          
         </Top>
-        <Bottom>
-          <Info>
+        <Center><Info>
             {cart.products.map((product) => (
               <Product>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
                     <ProductName>
-                      <b>Product:</b> {product.title}
+                      <b>Pizza:</b> {product.name}
                     </ProductName>
                     <ProductId>
                       <b>ID:</b> {product._id}
                     </ProductId>
-                    <ProductColor color={product.color} />
+                   
                     <ProductSize>
-                      <b>Size:</b> {product.size}
+                      <b>Velicina:</b> {product.size}
                     </ProductSize>
                   </Details>
                 </ProductDetail>
@@ -225,42 +231,44 @@ const Cart = () => {
                     <Remove />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    $ {product.price * product.quantity}
+                    € {product.price * 1}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
             ))}
             <Hr />
-          </Info>
+          </Info></Center>
+        <Bottom>
+          
           <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryTitle>naruceno:</SummaryTitle>
             <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemText>Ukupno</SummaryItemText>
+              <SummaryItemPrice>€ {cart.total.toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Cijena Dostave</SummaryItemText>
+              <SummaryItemPrice>€0.8</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Popust na Online dostavu</SummaryItemText>
+              <SummaryItemPrice>€ -0.8</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>1€</SummaryItemPrice>
+              <SummaryItemText>Ukupno:</SummaryItemText>
+              <SummaryItemPrice>{cart.total.toFixed(2)}€</SummaryItemPrice>
             </SummaryItem>
             <StripeCheckout
-              name="Tik Tak Pizza"
+              name="Tik Tak Pizza naplata"
               image=""
               billingAddress
               shippingAddress
-              description={`Your total is €300`}
-              amount={500 * 100}
+              description={`Ukupno za platiti €${cart.total}`}
+              amount={cart.total * 100}
               token={onToken}
               stripeKey="pk_test_51JmDLKLa14A3QCJe6pB4Jybqei88xMDIIPTAHdhl9fbH6zaQDyxmTorl1NtwAWQ5qlDT7HPb13LnfoIlkIgjeVJf00zA9Ggmk3"
             >
-              <Button>CHECKOUT NOW</Button>
+              <Button>Plati</Button>
             </StripeCheckout>
           </Summary>
         </Bottom>
@@ -271,4 +279,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Checkout;

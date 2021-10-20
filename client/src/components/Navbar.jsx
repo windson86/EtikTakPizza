@@ -12,6 +12,7 @@ import {logout} from "../redux/userRedux"
  
 const Container = styled.div`
 height: 60px;
+background-color: #ffffff;
 ${mobile({ height: "50px" })}
 `
 
@@ -67,7 +68,7 @@ const Navbar = () => {
     const user=useSelector((state) => state.user.currentUser);
     const dispatch = useDispatch();
    const handleLogout=()=>{
-       console.log("test")
+  
        dispatch(
         logout()
       );
@@ -80,18 +81,30 @@ const Navbar = () => {
            <Left>
          
         
-           {!isLogged && <StyledLink style={{ textDecoration: 'none' }} to="/register">   <NavItem>Register</NavItem></StyledLink>} 
-           {!isLogged && <Link style={{ textDecoration: 'none' }} to="/login">   <NavItem>Login</NavItem></Link>} 
+           {!isLogged && 
+           <StyledLink style={{ textDecoration: 'none' }} to="/register">   
+           <NavItem>Register</NavItem>
+           </StyledLink>} 
+           {!isLogged && 
+           <Link style={{ textDecoration: 'none' }} to="/login">  
+            <NavItem>Login</NavItem>
+            </Link>} 
          
-          {  isLogged && <Test onClick={()=>handleLogout()} >Logout</Test>} 
-             { isLogged && <NavItem>{user.firstName}</NavItem>}
+          {  isLogged && 
+          <Test 
+          onClick={()=>handleLogout()} >Logout
+          </Test>} 
+             { isLogged && 
+             <NavItem>{user.firstName}</NavItem>}
+            
             </Left>
            <Center><Logo>Tik Tak Pizza</Logo></Center>
+           
            <Right>
                 <NavItem>Menu</NavItem>
                { isLogged && <NavItem>Orders</NavItem>}
-              
-               <ShoppingCartOutlined></ShoppingCartOutlined>
+               { isLogged && <Link style={{ textDecoration: 'none' }} to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
+               
            </Right>
             </Wrapper>
         </Container>
