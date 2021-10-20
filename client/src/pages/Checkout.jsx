@@ -6,7 +6,7 @@ import OnSale from '../components/OnSale'
 import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
-import {userRequest,publicRequest} from "../requestMetods"
+import {userRequest} from "../requestMetods"
 import { useHistory } from "react-router";
 import {clearCart} from "../redux/cartRedux"
 
@@ -174,7 +174,7 @@ const Checkout = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await publicRequest.post("checkout/payment", {
+        const res = await userRequest.post("checkout/payment", {
           tokenId: stripeToken.id,
           amount: cart.total,
         });
