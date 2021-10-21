@@ -11,7 +11,7 @@ import {logout} from "../redux/userRedux"
 
  
 const Container = styled.div`
-height: 60px;
+height: 15%;
 background-color: #ffffff;
 ${mobile({ height: "50px" })}
 `
@@ -26,6 +26,7 @@ ${mobile({ padding: "10px 0px" })}
 const Left = styled.div`
 flex: 1;
 display: flex;
+width: 40%;
 align-items: center;
 justify-content: space-evenly;
 `
@@ -39,10 +40,12 @@ ${mobile({ fontSize: "12px" })}
 `
 const Center = styled.div`
 flex: 1;
+width: 20%;
 align-items: center;
 `
 const Right = styled.div`
 flex: 1;
+width: 40%;
 display: flex;
 align-items: center;
 justify-content: space-evenly;
@@ -66,6 +69,7 @@ const StyledLink = styled(Link)`
 
 const Navbar = () => {
     const {isLogged} = useSelector((state) => state.user);
+    const cart = useSelector((state) => state.cart);
     const user=useSelector((state) => state.user.currentUser);
     const dispatch = useDispatch();
    const handleLogout=()=>{
@@ -102,11 +106,12 @@ const Navbar = () => {
            <Center><Logo>Tik Tak Pizza</Logo></Center>
            
            <Right>
-           {isLogged && 
+           
            <Link style={{ textDecoration: 'none',textDecorationStyle:"none" }} to="/menu">  
             <NavItem>Menu</NavItem>
-            </Link>} 
-               { isLogged && <NavItem>Orders</NavItem>}
+            </Link>
+               { isLogged && cart.quantity===0 && <NavItem>Orders</NavItem>}
+               { isLogged && cart.quantity>0 && <NavItem>Orders({cart.quantity})</NavItem>}
                { isLogged && <Link style={{ textDecoration: 'none' }} to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
                
            </Right>

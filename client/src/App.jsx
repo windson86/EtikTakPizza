@@ -31,8 +31,7 @@ const App = () => {
     <Route path="/success">
           <Success />
         </Route>
-        <Route path="/menu">
-      {!isLogged ? <Redirect to="/" /> : <Menu />}
+        <Route path="/menu"> : <Menu />
     </Route>
   </Switch>
 </Router>

@@ -24,6 +24,7 @@ export const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       window.localStorage.removeItem("persist:root");
+      window.localStorage.clear();
       state.currentUser = {
         isLogged: false,
       };

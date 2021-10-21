@@ -8,7 +8,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import {userRequest} from "../requestMetods"
 import { useHistory } from "react-router";
-import {clearCart} from "../redux/cartRedux"
+import {clearProductFromCart,clearCart} from "../redux/cartRedux"
 
 
 
@@ -117,11 +117,9 @@ const ProductPrice = styled.div`
   ${mobile({ marginBottom: "20px" })}
 `;
 
-const Hr = styled.hr`
+
  
-  border: none;
-  height: 1px;
-`;
+ 
 
 const Summary = styled.div`
   flex: 1;
@@ -171,30 +169,36 @@ const Checkout = () => {
     setStripeToken(token);
   };
 
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("checkout/payment", {
+  useEffect(() => 
+  {
+    const makeRequest = async () =>
+    {
+      try 
+      {
+        const res = await userRequest.post("checkout/payment", 
+        {
           tokenId: stripeToken.id,
           amount: cart.total,
         });
-        console.log(res)
-        //const { size, ...others } = cart.products;
-        history.push("/success", {
-          stripeData: res.data,
-         
-          products: cart.products, });
-      } catch {}
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart, history]);
-  const emptyCart=()=>{
-    console.log("emptyCart")
-      dispatch(clearCart())
-  }
 
- 
-  return (<div>
+        history.push("/success", 
+        {
+          stripeData: res.data,
+          products: cart.products, 
+        });
+      } 
+      catch {}
+    };
+      stripeToken && makeRequest();
+  }, [stripeToken, cart, history]);
+
+  const emptyCartByProduct=(product)=>
+  {
+      dispatch(clearProductFromCart(product))
+  }   
+    
+return (
+<div>
     <OnSale/>
     <Navbar />
     <Container>
@@ -209,42 +213,40 @@ const Checkout = () => {
           </TopTexts>
           
         </Top>
-        <Center><Info>
+        <Center>
+          
+          <Info>
             {cart.products.map((product) => (
               <Product>
                 <ProductDetail>
                   <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <b>Pizza:</b> {product.name}
-                    </ProductName>
-                  
-                   
-                    <ProductSize>
-                    <FilterSize >
-                {product.size?.map((s) => (
-                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
-                ))}
-              </FilterSize>
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  
-                  <ProductPrice>
-                    € {product.price * 1}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
-            ))}
-            <Hr />
-          </Info>
-          <TopButton onClick={()=>emptyCart()}>isprazni</TopButton>
-          </Center>
-        <Bottom>
-          
-          <Summary>
-            <SummaryTitle>naruceno:</SummaryTitle>
+                      <Details>
+                        <ProductName>
+                          <b>Pizza:</b> {product.name}
+                        </ProductName>
+                          <ProductSize>
+                              <FilterSize >
+                                  {product.size?.map((s) => (
+                                <FilterSizeOption 
+                                key={s}>{s}
+                                </FilterSizeOption>))}
+                              </FilterSize>
+                          </ProductSize>
+                      </Details>        
+                 </ProductDetail>      
+                  <PriceDetail>
+                      <ProductPrice>
+                        € {product.price}
+                      </ProductPrice>
+                  </PriceDetail>
+                  <TopButton onClick={()=>emptyCartByProduct(product)}>delete</TopButton>
+              </Product> ))}
+               <TopButton onClick={()=>dispatch(clearCart())}>clear cart</TopButton>   
+          </Info>            
+          </Center>      
+        <Bottom>       
+        <Summary>
+            <SummaryTitle>Za platiti karticom:</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Ukupno</SummaryItemText>
               <SummaryItemPrice>€ {cart.total.toFixed(2)}</SummaryItemPrice>
@@ -261,6 +263,8 @@ const Checkout = () => {
               <SummaryItemText>Ukupno:</SummaryItemText>
               <SummaryItemPrice>{cart.total.toFixed(2)}€</SummaryItemPrice>
             </SummaryItem>
+            
+            
             <StripeCheckout
               name="Tik Tak Pizza naplata"
               image=""
@@ -273,12 +277,20 @@ const Checkout = () => {
             >
               <Button>Plati</Button>
             </StripeCheckout>
-          </Summary>
+          </Summary>      
+            
+           
+          
+         
+         
+        
+          
+          
         </Bottom>
       </Wrapper>
      
     </Container>
-    </div>
+  </div>
   );
 };
 

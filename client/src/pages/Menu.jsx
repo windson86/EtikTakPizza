@@ -1,6 +1,5 @@
 import Navbar from "../components/Navbar"
 import OnSale from "../components/OnSale"
-
 import styled from 'styled-components'
 import { getFavoritePizzas } from "../redux/ApiCalls"
 import { useEffect } from "react"
@@ -8,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import PizzaInfo from "../components/PizzaInfo"
 
 const Container = styled.div`
-
+padding-top: 90px;
 background-color: #ffffff;
 
 `
@@ -27,11 +26,11 @@ return(
 <Container>
 
     {pizzas.map((pizza)=>(
-        <PizzaInfo pizza={pizza}></PizzaInfo>
+        <PizzaInfo key={pizza._id} pizza={pizza}></PizzaInfo>
     ))}
    
    </Container>
-
+ 
     </div>
 )
 

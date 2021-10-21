@@ -7,6 +7,9 @@ import {
 import styled from "styled-components";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const Info = styled.div`
@@ -80,15 +83,30 @@ const SpanBig = styled.span`
 font-size: 24px;
 flex: 2;
 `
-
+/* const Left=styled.div`
+` */
 
 
 const PizzaInfo=({pizza})=>{
+  
+  const {isLogged} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleAddPizza=()=>{
-    dispatch(
-      addProduct({ pizza})
-    );
+    if(isLogged)
+    {
+      toast.success('Pizza dodana u narudzbe', {
+        position: toast.POSITION.TOP_LEFT
+      })
+      dispatch(addProduct({ pizza}));
+    }
+
+    else{
+      toast.warning('please login to shop', {
+        position: toast.POSITION.TOP_LEFT
+      });
+    }
+    
+    
 
   }
     return( 
@@ -114,7 +132,7 @@ const PizzaInfo=({pizza})=>{
        {pizza &&<Span>Sastojci:{" "}{pizza.ingredients.join(", ")}</Span>}
        {pizza && <Span>Lajkova:{" "}{pizza.likes.length}</Span>}
         
-
+       <ToastContainer />
       </Container>
      
     )
