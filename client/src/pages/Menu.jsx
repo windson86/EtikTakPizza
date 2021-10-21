@@ -21,7 +21,7 @@ const Menu=()=>{
 
 return(
     <div>
-        <OnSale/>
+<OnSale/>
 <Navbar/>
 <Container>
 

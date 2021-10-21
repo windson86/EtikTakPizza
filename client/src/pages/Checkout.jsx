@@ -44,11 +44,7 @@ const TopButton = styled.button`
 const TopTexts = styled.div`
   ${mobile({ display: "none" })}
 `;
-/* const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`; */
+
 const Center = styled.div`
   display: flex;
   align-items: center;
@@ -91,15 +87,6 @@ const Details = styled.div`
 `;
 
 const ProductName = styled.span``;
-
-
-
-/* const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`; */
 
 const ProductSize = styled.span``;
 
@@ -213,8 +200,9 @@ return (
           </TopTexts>
           
         </Top>
-        <Center>
-          
+
+       
+          <Center> 
           <Info>
             {cart.products.map((product) => (
               <Product>

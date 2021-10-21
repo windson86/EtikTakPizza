@@ -11,17 +11,19 @@ import {logout} from "../redux/userRedux"
 
  
 const Container = styled.div`
-height: 15%;
-background-color: #ffffff;
-${mobile({ height: "50px" })}
+height: 8vh;
+background-color: #ec9494;
+${mobile({ height: "15vh" })}
 `
 
 const Wrapper = styled.div`
-padding : 10px 20px;
+
 display: flex;
+height: 100%;
 justify-content: space-between;
 align-items: center;
-${mobile({ padding: "10px 0px" })}
+background-color: #ffffff;
+${mobile({ padding: "0px 0px" })}
 `
 const Left = styled.div`
 flex: 1;
@@ -29,6 +31,7 @@ display: flex;
 width: 40%;
 align-items: center;
 justify-content: space-evenly;
+ ${mobile({ flexDirection: "column"})}
 `
 
 
@@ -49,10 +52,18 @@ width: 40%;
 display: flex;
 align-items: center;
 justify-content: space-evenly;
+${mobile({ flexDirection: "column"})}
 
 `
 const NavItem = styled.div`
 cursor: pointer;
+width: 20vw;
+height: 2vh;
+text-align: center;
+border-radius: 10px;
+background-color: aliceblue;
+border: 3px solid blue;
+${mobile({ padding: "10px 5px",margin:'2px' })}
 `
 const Test = styled.div`
 cursor: pointer;
@@ -60,7 +71,7 @@ cursor: pointer;
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-
+flood-color: white;
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }
@@ -84,36 +95,42 @@ const Navbar = () => {
         <Container>
             <Wrapper>
            <Left>
-         
-        
-           {!isLogged && 
+           <Link style={{ 
+            textDecoration: 'none',
+            textDecorationStyle:"none" }} 
+            to="/menu">  
+            <NavItem>Menu</NavItem>
+            </Link>   
+
+        { isLogged && cart.quantity===0 && <NavItem>Orders</NavItem>}
+        { isLogged && cart.quantity>0 && <NavItem>Orders({cart.quantity})</NavItem>}
+        { isLogged && <Link to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
+                
+
+           
+        </Left>    
+            
+       <Center><Logo>Tik Tak Pizza</Logo></Center>    
+           
+        <Right>
+        {!isLogged && 
            <StyledLink style={{ textDecoration: 'none' }} to="/register">   
            <NavItem>Register</NavItem>
            </StyledLink>} 
-           {!isLogged && 
+        
+         {!isLogged && 
            <Link style={{ textDecoration: 'none' }} to="/login">  
             <NavItem>Login</NavItem>
-            </Link>} 
+            </Link>}    
+          
          
-          {  isLogged && 
+         
+         {isLogged && 
+            <NavItem>{user.firstName}</NavItem>} 
+            {isLogged && 
           <Test 
           onClick={()=>handleLogout()} >Logout
-          </Test>} 
-             { isLogged && 
-             <NavItem>{user.firstName}</NavItem>}
-            
-            </Left>
-           <Center><Logo>Tik Tak Pizza</Logo></Center>
-           
-           <Right>
-           
-           <Link style={{ textDecoration: 'none',textDecorationStyle:"none" }} to="/menu">  
-            <NavItem>Menu</NavItem>
-            </Link>
-               { isLogged && cart.quantity===0 && <NavItem>Orders</NavItem>}
-               { isLogged && cart.quantity>0 && <NavItem>Orders({cart.quantity})</NavItem>}
-               { isLogged && <Link style={{ textDecoration: 'none' }} to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
-               
+          </Test>}  
            </Right>
             </Wrapper>
         </Container>

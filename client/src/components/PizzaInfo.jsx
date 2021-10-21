@@ -30,8 +30,8 @@ const Info = styled.div`
 
 const Container = styled.div`
   flex: 1;
-  margin: 5px;
-  min-width: 280px;
+  margin: 5vh;
+  width: 80vw;
   height: 80%;
   display: flex;
   flex-direction: column;
@@ -53,10 +53,15 @@ const Container = styled.div`
 `; */
 const ImgContainer = styled.div`
   height: 100%;
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
 `;
 const Image = styled.img`
   height: 30vh;
+  width: 60vw;
   z-index: 2;
 `; 
  
@@ -77,14 +82,18 @@ const Icon = styled.div`
 `;
 const Span = styled.span`
 text-align :center;
+border: 2px solid;
+border-radius: 20px;
+margin-bottom: 1vh;
+padding: 10px;
+background-color: #f3caca;
 flex: 4;
 `
 const SpanBig = styled.span`
 font-size: 24px;
 flex: 2;
 `
-/* const Left=styled.div`
-` */
+
 
 
 const PizzaInfo=({pizza})=>{
@@ -94,16 +103,12 @@ const PizzaInfo=({pizza})=>{
   const handleAddPizza=()=>{
     if(isLogged)
     {
-      toast.success('Pizza dodana u narudzbe', {
-        position: toast.POSITION.TOP_LEFT
-      })
+      toast.success('Pizza dodana u narudzbe')
       dispatch(addProduct({ pizza}));
     }
 
     else{
-      toast.warning('please login to shop', {
-        position: toast.POSITION.TOP_LEFT
-      });
+      toast.warning('please login to shop', );
     }
     
     

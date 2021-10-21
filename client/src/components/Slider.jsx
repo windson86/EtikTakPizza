@@ -7,10 +7,10 @@ import { mobile } from "../responsive";
 
 const Container =styled.div`
 width: 100vw;
-height:80%;
+
 display: flex;
 background-color: #bddbd7;
-${mobile({ display: "none" })}
+
 `
 const Arrow =styled.div`
  width: 50px;

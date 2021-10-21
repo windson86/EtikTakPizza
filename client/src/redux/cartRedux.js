@@ -21,8 +21,8 @@ const cartSlice = createSlice({
     },
     clearProductFromCart: (state, action) => {
       state.quantity -= 1;
-      console.log(action.payload);
-      state.products.splice(state.products.indexOf(action.payload));
+
+      state.products.splice(state.products.indexOf(action.payload._id));
       state.total -= action.payload.price;
     },
   },
