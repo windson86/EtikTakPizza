@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+//import { desktop } from "../responsive";
 import { registerUser } from "../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from '../components/Navbar'
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
-  ${mobile({ width: "75%" })}
+
 `;
 
 const Title = styled.h1`

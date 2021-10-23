@@ -1,76 +1,87 @@
 import React from 'react';
 import styled from 'styled-components'
-import {ShoppingCartOutlined} from '@material-ui/icons'
+//import {ShoppingCartOutlined} from '@material-ui/icons'
 import { useSelector} from 'react-redux'
-import { mobile } from '../responsive'
+//import { desktop } from '../responsive'
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {logout} from "../redux/userRedux"
+import {logout} from "../redux/userRedux";
+import {placeName} from "../constans"
 
 
 
  
 const Container = styled.div`
-height: 8vh;
-background-color: #ec9494;
-${mobile({ height: "15vh" })}
+height: 15vh;
+width: 100vw;
+background-color: #bddbd7;
+display: flex;
+justify-content: center;
+align-items: center;
+
 `
 
 const Wrapper = styled.div`
 
+height: 70%;
+width: 95%;
+background-color: #f5a6a6;
 display: flex;
-height: 100%;
+border-radius: 20px;
 justify-content: space-between;
 align-items: center;
-background-color: #ffffff;
-${mobile({ padding: "0px 0px" })}
+
 `
 const Left = styled.div`
-flex: 1;
-display: flex;
+height: 70%;
 width: 40%;
-align-items: center;
+display: flex;
+
 justify-content: space-evenly;
- ${mobile({ flexDirection: "column"})}
+align-items: center;
+ 
 `
+
+
 
 
 const Logo = styled.h1`
 font-weight: bold;
 text-align: center;
+font-size: 2vh;
 
-${mobile({ fontSize: "12px" })}
+
 `
 const Center = styled.div`
-flex: 1;
+
 width: 20%;
 align-items: center;
 `
 const Right = styled.div`
-flex: 1;
+
 width: 40%;
 display: flex;
 align-items: center;
 justify-content: space-evenly;
-${mobile({ flexDirection: "column"})}
+
 
 `
 const NavItem = styled.div`
 cursor: pointer;
 width: 20vw;
-height: 2vh;
+height: 5vh;
+
 text-align: center;
-border-radius: 10px;
-background-color: aliceblue;
-border: 3px solid blue;
-${mobile({ padding: "10px 5px",margin:'2px' })}
+font-size: 3vh;
 `
 const Test = styled.div`
 cursor: pointer;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.link`
     text-decoration: none;
+    text-align: center;
 flood-color: white;
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
@@ -79,8 +90,11 @@ flood-color: white;
 
 
 const Navbar = () => {
+    const history = useHistory();
     const {isLogged} = useSelector((state) => state.user);
+    var extra=""
     const cart = useSelector((state) => state.cart);
+    if(isLogged){extra='('+cart.quantity+')'}
     const user=useSelector((state) => state.user.currentUser);
     const dispatch = useDispatch();
    const handleLogout=()=>{
@@ -95,26 +109,16 @@ const Navbar = () => {
         <Container>
             <Wrapper>
            <Left>
-           <Link style={{ 
-            textDecoration: 'none',
-            textDecorationStyle:"none" }} 
-            to="/menu">  
-            <NavItem>Menu</NavItem>
-            </Link>   
-
-        { isLogged && cart.quantity===0 && <NavItem>Orders</NavItem>}
-        { isLogged && cart.quantity>0 && <NavItem>Orders({cart.quantity})</NavItem>}
-        { isLogged && <Link to ="/checkout"><ShoppingCartOutlined></ShoppingCartOutlined></Link>}
-                
-
+          
+           <NavItem onClick={()=>history.push('/menu')}>Menu</NavItem>
            
-        </Left>    
-            
-       <Center><Logo>Tik Tak Pizza</Logo></Center>    
-           
-        <Right>
+           <NavItem onClick={()=>history.push('/orders')}>Orders{extra}</NavItem>
+          
+             </Left>   
+          <Center><Logo onClick={()=>history.push('/')}>{placeName}</Logo></Center>  
+            <Right>
         {!isLogged && 
-           <StyledLink style={{ textDecoration: 'none' }} to="/register">   
+           <StyledLink to="/register">   
            <NavItem>Register</NavItem>
            </StyledLink>} 
         
@@ -126,7 +130,7 @@ const Navbar = () => {
          
          
          {isLogged && 
-            <NavItem>{user.firstName}</NavItem>} 
+            <NavItem >{user.firstName}</NavItem>} 
             {isLogged && 
           <Test 
           onClick={()=>handleLogout()} >Logout

@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Checkout from "./pages/Checkout"
 import Success from "./pages/Success";
 import Menu from "./pages/Menu";
+import Orders from "./pages/Orders";
 
 const App = () => {
   const {isLogged} = useSelector((state) => state.user);
@@ -31,7 +32,10 @@ const App = () => {
     <Route path="/success">
           <Success />
         </Route>
-        <Route path="/menu"> : <Menu />
+        <Route path="/orders">
+          <Orders />
+        </Route>
+        <Route path="/menu"> <Menu />
     </Route>
   </Switch>
 </Router>

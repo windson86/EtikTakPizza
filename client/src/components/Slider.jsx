@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {getFavoritePizzas} from "../redux/ApiCalls"
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import { mobile } from "../responsive";
+//import { mobile } from "../responsive";
 
 const Container =styled.div`
 width: 100vw;

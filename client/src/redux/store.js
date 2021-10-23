@@ -3,6 +3,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userRedux";
 import cartReducer from "./cartRedux";
 import pizzasReducer from "./pizzaRedux";
+import ordersReducer from "./ordersRedux";
 import {
   persistStore,
   persistReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
   pizzas: pizzasReducer,
+  orders: ordersReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -3,20 +3,20 @@ import { useSelector,useDispatch } from "react-redux";
 import styled from "styled-components";
 import Navbar from '../components/Navbar'
 import OnSale from '../components/OnSale'
-import { mobile } from "../responsive";
+//import { desktop } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import {userRequest} from "../requestMetods"
 import { useHistory } from "react-router";
 import {clearProductFromCart,clearCart} from "../redux/cartRedux"
 
-
+// ${desktop({ flexDirection: "" })}
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
-  ${mobile({ padding: "10px" })}
+ 
 `;
 
 const Title = styled.h1`
@@ -30,7 +30,9 @@ const Top = styled.div`
   justify-content: space-between;
   padding: 20px;
 `;
-
+const RemoveItemButton = styled.button`
+  width:20vw;
+`
 const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
@@ -42,7 +44,7 @@ const TopButton = styled.button`
 `;
 
 const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
+ 
 `;
 
 const Center = styled.div`
@@ -56,7 +58,7 @@ const Center = styled.div`
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
+  
 `;
 
 const Info = styled.div`
@@ -66,7 +68,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
+ 
 `;
 
 const ProductDetail = styled.div`
@@ -101,7 +103,7 @@ const PriceDetail = styled.div`
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
+  
 `;
 
 
@@ -132,11 +134,7 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-const FilterSizeOption = styled.option``;
+
 
 const Button = styled.button`
   width: 100%;
@@ -213,12 +211,7 @@ return (
                           <b>Pizza:</b> {product.name}
                         </ProductName>
                           <ProductSize>
-                              <FilterSize >
-                                  {product.size?.map((s) => (
-                                <FilterSizeOption 
-                                key={s}>{s}
-                                </FilterSizeOption>))}
-                              </FilterSize>
+                            {product.size}
                           </ProductSize>
                       </Details>        
                  </ProductDetail>      
@@ -227,7 +220,7 @@ return (
                         € {product.price}
                       </ProductPrice>
                   </PriceDetail>
-                  <TopButton onClick={()=>emptyCartByProduct(product)}>delete</TopButton>
+                  <RemoveItemButton onClick={()=>emptyCartByProduct(product)}>delete</RemoveItemButton>
               </Product> ))}
                <TopButton onClick={()=>dispatch(clearCart())}>clear cart</TopButton>   
           </Info>            

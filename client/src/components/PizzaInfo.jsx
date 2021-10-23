@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
     FavoriteBorderOutlined,
    
@@ -93,18 +93,27 @@ const SpanBig = styled.span`
 font-size: 24px;
 flex: 2;
 `
+const FilterSize = styled.select`
+ 
+`;
+const FilterSizeOption = styled.option``;
 
 
 
 const PizzaInfo=({pizza})=>{
-  
+  const handleChange = (e) =>{
+    console.log("test",e.target.value)
+    setPizzaIndex(e.target.value)
+  }
   const {isLogged} = useSelector((state) => state.user);
+  const [pizzaIndex,setPizzaIndex]= useState(0)
   const dispatch = useDispatch();
   const handleAddPizza=()=>{
     if(isLogged)
     {
       toast.success('Pizza dodana u narudzbe')
-      dispatch(addProduct({ pizza}));
+      const {size,price,...others}=pizza
+      dispatch(addProduct({pizza:{size:pizza.size[pizzaIndex],price:pizza.price[pizzaIndex], ...others}}));
     }
 
     else{
@@ -112,7 +121,6 @@ const PizzaInfo=({pizza})=>{
     }
     
     
-
   }
     return( 
   
@@ -120,20 +128,25 @@ const PizzaInfo=({pizza})=>{
        
       
         <Info>
+        <FilterSize  onChange={handleChange} >
+           {pizza.size.map((size,i)=>(
+             <FilterSizeOption  key={i} value={i} >{size}{pizza.price[i]}</FilterSizeOption>
+           ))}
+            </FilterSize>                                                                 
           <Icon>
             <ShoppingCartOutlined onClick={()=>handleAddPizza()} />
           </Icon>
-          
+         
           <Icon>
             <FavoriteBorderOutlined />
-          </Icon>
+          </Icon> 
         </Info>
        {pizza &&<ImgContainer>
               <Image src={pizza.img} />
             </ImgContainer>}
        {pizza && <SpanBig>{pizza.name}</SpanBig>}
        {pizza &&<Span>{pizza.desc}</Span>}
-       {pizza && <Span>Cijena{" "}{pizza.price.toFixed(2)}€ or ~{" "}{(pizza.price*7.43).toFixed(2)}Kn </Span>}
+       {pizza && <Span>Cijena{" "}{pizza.price[1].toFixed(2)}€ or ~{" "}{(pizza.price[1]*7.43).toFixed(2)}Kn </Span>}
        {pizza &&<Span>Sastojci:{" "}{pizza.ingredients.join(", ")}</Span>}
        {pizza && <Span>Lajkova:{" "}{pizza.likes.length}</Span>}
         

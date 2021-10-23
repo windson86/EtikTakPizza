@@ -5,6 +5,7 @@ import { getFavoritePizzas } from "../redux/ApiCalls"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import PizzaInfo from "../components/PizzaInfo"
+import Footer from "../components/Footer"
 
 const Container = styled.div`
 padding-top: 90px;
@@ -30,7 +31,7 @@ return(
     ))}
    
    </Container>
- 
+ <Footer/>
     </div>
 )
 
