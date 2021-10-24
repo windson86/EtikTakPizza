@@ -146,7 +146,7 @@ const PizzaInfo=({pizza})=>{
             </ImgContainer>}
        {pizza && <SpanBig>{pizza.name}</SpanBig>}
        {pizza &&<Span>{pizza.desc}</Span>}
-       {pizza && <Span>Cijena{" "}{pizza.price.toFixed(2)}€ or ~{" "}{(pizza.price*7.43).toFixed(2)}Kn </Span>}
+       {pizza && <Span>Cijena{" "}{pizza.price[1].toFixed(2)}€ or ~{" "}{(pizza.price[1]*7.43).toFixed(2)}Kn </Span>}
        {pizza &&<Span>Sastojci:{" "}{pizza.ingredients.join(", ")}</Span>}
        {pizza && <Span>Lajkova:{" "}{pizza.likes.length}</Span>}
         

@@ -77,7 +77,7 @@ const Orders = () => {
     const cart = useSelector((state)=>state.cart)
     const user = useSelector((state)=>state.user.currentUser)
     const orders = useSelector((state)=>state.orders.orders)
-    console.log(cart)
+    
     
     const dispatch = useDispatch();
     const emptyCartByProduct=(product)=>
