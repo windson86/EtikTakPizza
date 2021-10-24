@@ -1,1 +1,1 @@
-export const placeName = "name";
+export const placeName = "Tik Tak Pizza";

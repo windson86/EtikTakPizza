@@ -121,8 +121,8 @@ const Slider = () => {
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-       { pizzas.map((pizza)=>( 
-       <Slide >
+       { pizzas.map((pizza,i)=>( 
+       <Slide  key={i}>
            <ImgContainer>
               <Image src={pizza.img} />
             </ImgContainer>

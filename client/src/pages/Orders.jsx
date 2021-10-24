@@ -103,11 +103,11 @@ const Orders = () => {
     let ordersSorted
     const isAdmin = false
     if (isAdmin) {
-      ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i}  />))
+      if(orders){ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i}  />))}
       heading = 'Pending Orders'
       noOrdersMessage = 'There are currently no pending orders!'
     } else {
-      ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i} />))
+      if(orders){ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i} />))}
       heading = 'My Orders'
       noOrdersMessage = 'You have not made any orders!'
     }
@@ -184,7 +184,7 @@ const Orders = () => {
                     {ordersSorted}
                   </tbody>
                 </table>
-                {ordersSorted.length === 0 && <h3 className='text-warning'>{noOrdersMessage}</h3>}
+                {orders && ordersSorted.length === 0 && <h3 className='text-warning'>{noOrdersMessage}</h3>}
               </div>
             </div>
           </div>

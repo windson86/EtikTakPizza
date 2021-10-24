@@ -20,20 +20,24 @@ import {
   
   const Left = styled.div`
     flex: 1;
-    width: 50vw;
+    width: 50%;
     display: flex;
     flex-direction: column;
     
   `;
   
-  const Logo = styled.h1``;
+  const Logo = styled.h1`
+  height: 33%;
+  font-size:3vh;
+  `;
   
   const Desc = styled.p`
-    margin: 20px 0px;
+    height: 33%;
   `;
   
   const SocialContainer = styled.div`
     display: flex;
+    height: 34%;
   `;
   
   const SocialIcon = styled.div`
@@ -58,8 +62,8 @@ import {
 
   
   const Right = styled.div`
-    width: 50vw;
-    padding: 20px;
+    width: 50%;
+    
     
   `;
   
@@ -71,7 +75,8 @@ import {
   `;
   
   const Payment = styled.img`
-      width: 50%;
+      width: 100%;
+      margin-bottom: 20px
   `;
   
   const Footer = () => {

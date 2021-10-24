@@ -1,6 +1,6 @@
 import axios from "axios";
-//const BASE_URL = "http://localhost:5000/";
-const BASE_URL = "https://etiktakpizza.herokuapp.com/";
+const BASE_URL = "http://localhost:5000/";
+//const BASE_URL = "https://etiktakpizza.herokuapp.com/";
 const TOKEN = localStorage.getItem("accessToken");
 
 export const publicRequest = axios.create({
@@ -9,5 +9,5 @@ export const publicRequest = axios.create({
 
 export const userRequest = axios.create({
   baseURL: BASE_URL,
-  header: { token: `Bearer ${TOKEN}` },
+  headers: { Authorization: "Bearer " + TOKEN },
 });

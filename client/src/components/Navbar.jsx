@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
-//import {ShoppingCartOutlined} from '@material-ui/icons'
+
 import { useSelector} from 'react-redux'
 //import { desktop } from '../responsive'
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import {logout} from "../redux/userRedux";
 import {placeName} from "../constans"
@@ -79,14 +79,14 @@ const Test = styled.div`
 cursor: pointer;
 `
 
-const StyledLink = styled.link`
+/* const StyledLink = styled.link`
     text-decoration: none;
     text-align: center;
 flood-color: white;
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }
-`;
+`; */
 
 
 const Navbar = () => {
@@ -110,22 +110,22 @@ const Navbar = () => {
             <Wrapper>
            <Left>
           
-           <NavItem onClick={()=>history.push('/menu')}>Menu</NavItem>
+         {isLogged && <NavItem onClick={()=>history.push('/menu')}>Menu</NavItem>}  
            
-           <NavItem onClick={()=>history.push('/orders')}>Orders{extra}</NavItem>
+         {isLogged && <NavItem onClick={()=>history.push('/orders')}>Orders{extra}</NavItem>}  
           
              </Left>   
           <Center><Logo onClick={()=>history.push('/')}>{placeName}</Logo></Center>  
             <Right>
         {!isLogged && 
-           <StyledLink to="/register">   
-           <NavItem>Register</NavItem>
-           </StyledLink>} 
+           
+           <NavItem onClick={()=>history.push('/register')}>Register</NavItem>}
+           
         
          {!isLogged && 
-           <Link style={{ textDecoration: 'none' }} to="/login">  
-            <NavItem>Login</NavItem>
-            </Link>}    
+           
+            <NavItem  onClick={()=>history.push('/login')}>Login</NavItem>}
+           
           
          
          
