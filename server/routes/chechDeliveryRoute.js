@@ -2,8 +2,6 @@ const router = require("express").Router();
 const nodemailer = require("nodemailer");
 const verifyToken = require("../routes/verifyToken");
 
-//const checkDeliveryController = require("../controllers/check.delivery");
-
 router.post("/check", async (req, res) => {
   try {
     const cart = req.body.cart;

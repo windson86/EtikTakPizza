@@ -5,13 +5,13 @@ const Order = require("../Models/Order");
 const router = new express.Router();
 const { verifyTokenAndAuthorization } = require("./verifyToken");
 
-router.post("/create", verifyTokenAndAuthorization, async (req, res) => {
+router.post("/create/:id", verifyTokenAndAuthorization, async (req, res) => {
   const newOrder = new Order({
     userId: req.user.id,
     products: req.body.products,
     amount: req.body.amount,
     date: req.body.date,
-    address: { city: "test address" },
+    address: req.body.address,
   });
   try {
     console.log(req.body);

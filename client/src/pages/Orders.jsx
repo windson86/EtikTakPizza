@@ -76,6 +76,11 @@ const PriceDetail = styled.div`
 const ProductPrice = styled.div`
 
 `;
+const TotalRow = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+`;
 
 const RemoveItemButton = styled.button`
   width:15vw;
@@ -113,7 +118,7 @@ const Orders = () => {
   const CreateOrder = async () =>{
       if(!user.address)return toast("nema adrese")
       if(cart.products.length>0){try {
-        const res = await userRequest.post("/orders/create",{
+        const res = await userRequest.post(`/orders/create/${user._id}`,{
           userId: user._id,
           products: cart.products.map((item)=>(
            {  productId: item._id,
@@ -124,6 +129,8 @@ const Orders = () => {
            date:Date.now()
         })
         console.log(res.data)
+        toast.success("order completed")
+        dispatch(clearCart())
       } catch (error) {
         
       }}
@@ -160,6 +167,7 @@ const Orders = () => {
                   </PriceDetail>
                  
               </Product> ))}
+              <TotalRow>Ukupno: {cart.total} $</TotalRow>
               <OrderButtons>
                <button onClick={()=>dispatch(clearCart())}>clear cart</button> 
                <button onClick={()=>CreateOrder()}>order</button>

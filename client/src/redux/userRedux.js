@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { publicRequest } from "../requestMetods";
+import { publicRequest, userRequest } from "../requestMetods";
 
 export const registerUser = createAsyncThunk("users/register", async (user) => {
   const response = await publicRequest.post("auth/register", user);
@@ -8,6 +8,14 @@ export const registerUser = createAsyncThunk("users/register", async (user) => {
 
 export const loginUser = createAsyncThunk("users/login", async (user) => {
   const response = await publicRequest.post("auth/login", user);
+  return response.data;
+});
+
+export const updateUser = createAsyncThunk("users/update", async (user) => {
+  console.log("userRedux", user);
+  const response = await userRequest.put(`user/${user._id}`, {
+    user,
+  });
   return response.data;
 });
 
@@ -57,6 +65,20 @@ export const userSlice = createSlice({
       state.isLogged = true;
     },
     [registerUser.rejected]: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
+    [updateUser.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [updateUser.fulfilled]: (state, action) => {
+      state.currentUser = action.payload;
+
+      state.pending = false;
+      state.isLogged = true;
+    },
+    [updateUser.rejected]: (state) => {
       state.pending = false;
       state.error = true;
     },
