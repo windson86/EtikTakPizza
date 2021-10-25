@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userRequest } from "../requestMetods";
 
-export const fetchUserOrders = createAsyncThunk("orders/user", async (user) => {
-  const response = await userRequest.get(`orders/${user._id}`);
-  return response.data;
-});
+export const fetchUserOrders = createAsyncThunk(
+  "orders/myorders",
+  async (id) => {
+    const response = await userRequest.get(`orders/myorders/${id}`);
+    return response.data;
+  }
+);
 
 export const ordersSlice = createSlice({
   name: "order",
@@ -27,7 +30,7 @@ export const ordersSlice = createSlice({
     },
 
     fetchPendingOrdersSuccess: (state, action) => {
-      state.orders = action.payload;
+      state.orders = [...action.payload];
       state.isFetching = false;
     },
     fetchPendingOrdersFailure: (state, action) => {

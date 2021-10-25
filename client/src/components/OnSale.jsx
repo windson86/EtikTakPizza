@@ -5,9 +5,10 @@ width: 100vw;
 background-color:teal;
 color: white;
 display: flex;
+justify-content: space-evenly;
 align-items: center;
 
-font-size: 5vw;
+font-size: 3vh;
 text-align: center;
 font-weight: 500;
 `

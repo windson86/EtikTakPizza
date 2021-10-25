@@ -23,7 +23,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 40%;
+  width: 60%;
   padding: 20px;
   background-color: white;
 
@@ -52,7 +52,7 @@ const Agreement = styled.span`
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 80%;
   border: none;
   padding: 15px 20px;
   background-color: teal;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {getFavoritePizzas} from "../redux/ApiCalls"
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
+import { useHistory } from "react-router";
 //import { mobile } from "../responsive";
 
 const Container =styled.div`
@@ -97,6 +98,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const Slider = () => {
+  const history = useHistory();
     const [slideIndex, setSlideIndex] = useState(0);
     const dispatch = useDispatch();
     
@@ -130,7 +132,7 @@ const Slider = () => {
                 
               <Title>{pizza.name}</Title>
               <Desc>{pizza.desc}</Desc>
-              <Button>Naruci</Button>
+              <Button onClick={()=>{history.push('/menu')}}>Menu</Button>
             </InfoContainer>
         </Slide>))}
       </Wrapper>

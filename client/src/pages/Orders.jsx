@@ -3,9 +3,12 @@ import styled from 'styled-components'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import OnSale from '../components/OnSale'
-import OrdersRow from '../components/OrdersRow'
+import GetOrders from '../components/GetOrders'
+import {fetchUserOrders} from "../redux/ordersRedux"
 import { userRequest } from '../requestMetods'
 import {clearProductFromCart,clearCart} from "../redux/cartRedux"
+import { useEffect } from 'react'
+import { ToastContainer, toast } from "react-toastify";
 
 const Container= styled.div`
 width: 100vw;
@@ -24,9 +27,18 @@ align-items: center;
 
 `
 const Info = styled.div`
- 
+ display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
 `;
 
+const OrderButtons=styled.div`
+display: flex;
+
+justify-content: space-between;
+align-items: center;
+`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
@@ -76,71 +88,61 @@ const RemoveItemButton = styled.button`
 const Orders = () => {
     const cart = useSelector((state)=>state.cart)
     const user = useSelector((state)=>state.user.currentUser)
-    const orders = useSelector((state)=>state.orders.orders)
+   const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(fetchUserOrders(user._id))
     
-    
-    const dispatch = useDispatch();
+    },[dispatch,user]);
+   
     const emptyCartByProduct=(product)=>
   {
       dispatch(clearProductFromCart(product))
+      
   }  
     const testDelivery= async()=>{
-        
+    
         try{
             const res = await userRequest.post("delivery/check", 
         {
           cart:cart
         }).then();
-        
         console.log(res)
-        }catch(err){console.log(err)}
+        }catch(err){console.log(err)}}
+
+  const CreateOrder = async () =>{
+      if(!user.address)return toast("nema adrese")
+      if(cart.products.length>0){try {
+        const res = await userRequest.post("/orders/create",{
+          userId: user._id,
+          products: cart.products.map((item)=>(
+           {  productId: item._id,
+              size: item.size
+          })),
+           amount:cart.total,
+           address:user.address,
+           date:Date.now()
+        })
+        console.log(res.data)
+      } catch (error) {
         
-    }
-  
-
-    let heading
-    let noOrdersMessage
-    let ordersSorted
-    const isAdmin = false
-    if (isAdmin) {
-      if(orders){ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i}  />))}
-      heading = 'Pending Orders'
-      noOrdersMessage = 'There are currently no pending orders!'
-    } else {
-      if(orders){ordersSorted = orders.sort((a, b) => new Date(b.date) - new Date(a.date)).map((o, i) => (<OrdersRow key={o._id} order={o} index={i} />))}
-      heading = 'My Orders'
-      noOrdersMessage = 'You have not made any orders!'
-    }
-
-    const CreateOrder = async () =>{
-          try {
-            const res = await userRequest.post("/orders/create",{
-              userId: user._id,
-              products: cart.products.map((item)=>(
-               {  productId: item._id,
-                  size: item.size
-              })),
-               amount:cart.total,
-               address:user.address,
-               date:Date.now()
-            })
-            console.log(res.data)
-          } catch (error) {
-            
-          }
+      }}
+            else{toast.warning("cart empty")}
 
     }
 
 
     return (
         <div>
+          <ToastContainer/>
         <OnSale/>
         <Navbar/>
             <Container>
                <TopCreateOrder>
-               <Info>
+           {cart.products.length>0 &&  
+          <Info>
             {cart.products.map((product,prodIndex) => (
-              <Product>
+              <Product key={prodIndex}>
                 <ProductDetail>
                   <Image src={product.img} />
                       <Details>
@@ -158,38 +160,14 @@ const Orders = () => {
                   </PriceDetail>
                  
               </Product> ))}
+              <OrderButtons>
                <button onClick={()=>dispatch(clearCart())}>clear cart</button> 
                <button onClick={()=>CreateOrder()}>order</button>
                <button onClick={()=>testDelivery()}>check delivery</button>  
-          </Info>   
+               </OrderButtons>
+          </Info> }     
                </TopCreateOrder>
-               <div className='container' style={{'paddingTop': 25}}>
-        <h1 className='text-center'>{heading}</h1>
-        <div className='row' style={{'paddingTop': 25}}>
-          <div className='col-md-12' id='customer-orders'>
-            <div className='box'>
-              <div className='table-responsive'>
-                <table className='table table-hover'>
-                  <thead>
-                    <tr>
-                      <th>Order</th>
-                      <th>Date</th>
-                      <th>Total</th>
-                      <th>Status</th>
-                      <th>View</th>
-                      {isAdmin && <th>Action</th>}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ordersSorted}
-                  </tbody>
-                </table>
-                {orders && ordersSorted.length === 0 && <h3 className='text-warning'>{noOrdersMessage}</h3>}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              <GetOrders/>
 
             </Container>
             <Footer/>

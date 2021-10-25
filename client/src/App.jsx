@@ -12,6 +12,7 @@ import Checkout from "./pages/Checkout"
 import Success from "./pages/Success";
 import Menu from "./pages/Menu";
 import Orders from "./pages/Orders";
+import UserPage from "./pages/UserPage";
 
 const App = () => {
   const {isLogged} = useSelector((state) => state.user);
@@ -33,8 +34,12 @@ const App = () => {
           <Success />
         </Route>
         <Route path="/orders">
-          <Orders />
+        {!isLogged ? <Redirect to="/" /> : <Orders />}
         </Route>
+        <Route path="/user">
+        {!isLogged ? <Redirect to="/" /> : <UserPage />}
+        </Route>
+
         <Route path="/menu"> <Menu />
     </Route>
   </Switch>

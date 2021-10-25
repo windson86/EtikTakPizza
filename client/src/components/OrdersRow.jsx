@@ -4,17 +4,15 @@ import {Link} from 'react-router-dom'
 
 const OrdersRow = (props) => {
   const isAdmin = false
-  const {date, products, status} = props.order
-  let totalPrice = 0
-  for (const product of products) {
-    totalPrice += product.quantity * product.price
-  }
+  const {date, amount, status} = props.order
+  
+ 
 
   return (
     <tr>
       <th>#{props.index + 1}</th>
       <td>{new Date(date).toLocaleString()}</td>
-      <td>$ {totalPrice.toFixed(2)}</td>
+      <td>$ {amount.toFixed(2)}</td>
       <td><span className='label label-info'>{status}</span>
       </td>
       <td>

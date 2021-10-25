@@ -79,14 +79,7 @@ const Test = styled.div`
 cursor: pointer;
 `
 
-/* const StyledLink = styled.link`
-    text-decoration: none;
-    text-align: center;
-flood-color: white;
-    &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-    }
-`; */
+
 
 
 const Navbar = () => {
@@ -130,7 +123,7 @@ const Navbar = () => {
          
          
          {isLogged && 
-            <NavItem >{user.firstName}</NavItem>} 
+            <NavItem onClick={()=>history.push('/user')} >{user.firstName}</NavItem>} 
             {isLogged && 
           <Test 
           onClick={()=>handleLogout()} >Logout
