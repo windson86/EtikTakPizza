@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+
 import {
     FavoriteBorderOutlined,
    
@@ -102,18 +102,20 @@ const FilterSizeOption = styled.option``;
 
 const PizzaInfo=({pizza})=>{
   const handleChange = (e) =>{
-    console.log("test",e.target.value)
-    setPizzaIndex(e.target.value)
+    
+    //setPizzaIndex(e.target.value)
   }
   const {isLogged} = useSelector((state) => state.user);
-  const [pizzaIndex,setPizzaIndex]= useState(0)
+  //const [pizzaIndex,setPizzaIndex]= useState(0)
   const dispatch = useDispatch();
   const handleAddPizza=()=>{
     if(isLogged)
     {
       toast.success('Pizza dodana u narudzbe')
-      const {size,price,...others}=pizza
-      dispatch(addProduct({pizza:{size:pizza.size[pizzaIndex],price:pizza.price[pizzaIndex], ...others}}));
+      //const {size,price,...others}=pizza
+      console.log(pizza)
+      dispatch(addProduct(pizza))
+      //dispatch(addProduct({pizza:{size:pizza.size[pizzaIndex],price:pizza.price[pizzaIndex], ...others}}));
     }
 
     else{

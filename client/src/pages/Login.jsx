@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from '../components/Navbar'
 import OnSale from '../components/OnSale'
 
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -27,6 +28,7 @@ const Wrapper = styled.div`
   background-color: white;
 
 `;
+
 
 const Title = styled.h1`
   font-size: 24px;
@@ -84,6 +86,7 @@ const Login = () => {
   return (<div>
     <OnSale/>
         <Navbar/>
+      
     <Container>
 
       <Wrapper>
