@@ -9,7 +9,6 @@ const cartSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      console.log(action.payload);
       state.quantity += 1;
       state.products.push(action.payload);
       //state.total += action.payload.pizza.price;
@@ -19,15 +18,24 @@ const cartSlice = createSlice({
       state.products = [];
       state.total = 0;
     },
-    clearProductFromCart: (state, action) => {
+    clearProductFromCartByIndex: (state, action) => {
+      state.quantity -= 1;
+      state.products.splice(action.payload.index, 1);
+    },
+
+    /* clearProductFromCart: (state, action) => {
       state.quantity -= 1;
 
       state.products.splice(state.products.indexOf(action.payload._id));
       state.total -= action.payload.price;
-    },
+    }, */
   },
 });
 
-export const { addProduct, clearCart, clearProductFromCart } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  clearCart,
+  clearProductFromCart,
+  clearProductFromCartByIndex,
+} = cartSlice.actions;
 export default cartSlice.reducer;

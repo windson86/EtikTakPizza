@@ -1,16 +1,13 @@
-
 import {
-    FavoriteBorderOutlined,
-   
-    ShoppingCartOutlined,
-  } from "@material-ui/icons";
+  FavoriteBorderOutlined,
+  ShoppingCartOutlined,
+} from "@material-ui/icons";
 import styled from "styled-components";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const Info = styled.div`
   opacity: 0;
@@ -39,12 +36,12 @@ const Container = styled.div`
   justify-content: space-evenly;
   background-color: #f5fbfd;
   position: relative;
-  &:hover ${Info}{
+  &:hover ${Info} {
     opacity: 1;
   }
 `;
 
- /* const Circle = styled.div`
+/* const Circle = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -63,8 +60,8 @@ const Image = styled.img`
   height: 30vh;
   width: 60vw;
   z-index: 2;
-`; 
- 
+`;
+
 const Icon = styled.div`
   width: 40px;
   height: 40px;
@@ -81,82 +78,64 @@ const Icon = styled.div`
   }
 `;
 const Span = styled.span`
-text-align :center;
-border: 2px solid;
-border-radius: 20px;
-margin-bottom: 1vh;
-padding: 10px;
-background-color: #f3caca;
-flex: 4;
-`
-const SpanBig = styled.span`
-font-size: 24px;
-flex: 2;
-`
-const FilterSize = styled.select`
- 
+  text-align: center;
+  border: 2px solid;
+  border-radius: 20px;
+  margin-bottom: 1vh;
+  padding: 10px;
+  background-color: #f3caca;
+  flex: 4;
 `;
-const FilterSizeOption = styled.option``;
+const SpanBig = styled.span`
+  font-size: 24px;
+  flex: 2;
+`;
 
-
-
-const PizzaInfo=({pizza})=>{
-  const handleChange = (e) =>{
-    
-    //setPizzaIndex(e.target.value)
-  }
-  const {isLogged} = useSelector((state) => state.user);
+const PizzaInfo = ({ pizza }) => {
+  const { isLogged } = useSelector((state) => state.user);
   //const [pizzaIndex,setPizzaIndex]= useState(0)
   const dispatch = useDispatch();
-  const handleAddPizza=()=>{
-    if(isLogged)
-    {
-      toast.success('Pizza dodana u narudzbe')
+  const handleAddPizza = () => {
+    if (isLogged) {
+      toast.success("Pizza dodana u narudzbe");
       //const {size,price,...others}=pizza
-      console.log(pizza)
-      dispatch(addProduct(pizza))
+
+      dispatch(addProduct(pizza));
       //dispatch(addProduct({pizza:{size:pizza.size[pizzaIndex],price:pizza.price[pizzaIndex], ...others}}));
+    } else {
+      toast.warning("please login to shop");
     }
+  };
+  return (
+    <Container>
+      <Info>
+        <Icon>
+          <ShoppingCartOutlined onClick={() => handleAddPizza()} />
+        </Icon>
 
-    else{
-      toast.warning('please login to shop', );
-    }
-    
-    
-  }
-    return( 
-  
-        <Container>
-       
-      
-        <Info>
-        <FilterSize  onChange={handleChange} >
-           {pizza.size.map((size,i)=>(
-             <FilterSizeOption  key={i} value={i} >{size}{pizza.price[i]}</FilterSizeOption>
-           ))}
-            </FilterSize>                                                                 
-          <Icon>
-            <ShoppingCartOutlined onClick={()=>handleAddPizza()} />
-          </Icon>
-         
-          <Icon>
-            <FavoriteBorderOutlined />
-          </Icon> 
-        </Info>
-       {pizza &&<ImgContainer>
-              <Image src={pizza.img} />
-            </ImgContainer>}
-       {pizza && <SpanBig>{pizza.name}</SpanBig>}
-       {pizza &&<Span>{pizza.desc}</Span>}
-       {pizza && <Span>Cijena{" "}{pizza.price[1].toFixed(2)}€ or ~{" "}{(pizza.price[1]*7.43).toFixed(2)}Kn </Span>}
-       {pizza &&<Span>Sastojci:{" "}{pizza.ingredients.join(", ")}</Span>}
-       {pizza && <Span>Lajkova:{" "}{pizza.likes.length}</Span>}
-        
-       <ToastContainer />
-      </Container>
-     
-    )
-   
-}
+        <Icon>
+          <FavoriteBorderOutlined />
+        </Icon>
+      </Info>
+      {pizza && (
+        <ImgContainer>
+          <Image src={pizza.img} />
+        </ImgContainer>
+      )}
+      {pizza && <SpanBig>{pizza.name}</SpanBig>}
+      {pizza && <Span>{pizza.desc}</Span>}
+      {pizza && (
+        <Span>
+          Cijena {pizza.price[1].toFixed(2)}€ or ~{" "}
+          {(pizza.price[1] * 7.43).toFixed(2)}Kn{" "}
+        </Span>
+      )}
+      {pizza && <Span>Sastojci: {pizza.ingredients.join(", ")}</Span>}
+      {pizza && <Span>Lajkova: {pizza.likes.length}</Span>}
 
-export default PizzaInfo
+      <ToastContainer />
+    </Container>
+  );
+};
+
+export default PizzaInfo;

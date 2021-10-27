@@ -6,8 +6,12 @@ import OnSale from "../components/OnSale";
 import GetOrders from "../components/GetOrders";
 import { fetchUserOrders } from "../redux/ordersRedux";
 import { userRequest } from "../requestMetods";
-import { clearProductFromCart, clearCart } from "../redux/cartRedux";
-import { useEffect, useState } from "react";
+import {
+  clearProductFromCartByIndex,
+  clearCart,
+  addProduct,
+} from "../redux/cartRedux";
+import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 const Container = styled.div`
@@ -65,7 +69,7 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const PriceDetail = styled.div`
-  width: 40vw;
+  width: 30vw;
   display: flex;
 
   align-items: center;
@@ -84,13 +88,14 @@ const RemoveItemButton = styled.button`
   height: 35%;
   padding-right: 1vw;
 `;
-const FilterSize = styled.select``;
+const FilterSize = styled.select`
+  width: 30vw;
+`;
 const FilterSizeOption = styled.option``;
 
 const Orders = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
-  const [totalCart, setTotalCart] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -98,8 +103,8 @@ const Orders = () => {
     dispatch(fetchUserOrders(user._id));
   }, [dispatch, user]);
 
-  const emptyCartByProduct = (product) => {
-    dispatch(clearProductFromCart(product));
+  const emptyCartByIndex = (index) => {
+    dispatch(clearProductFromCartByIndex({ index: index }));
   };
   const testDelivery = async () => {
     try {
@@ -114,26 +119,7 @@ const Orders = () => {
     }
   };
 
-  useEffect(() => {
-    let total = 0;
-    cart.products.map(
-      (pizza, i) =>
-        (total += parseFloat(
-          document.getElementById("size" + i).value.split(",")[0]
-        ))
-    );
-    setTotalCart(total.toFixed(2));
-  }, [cart]);
-
   const CreateOrder = async () => {
-    let total = 0;
-    cart.products.map(
-      (pizza, i) =>
-        (total += parseFloat(
-          document.getElementById("size" + i).value.split(",")[0]
-        ))
-    );
-    setTotalCart(total);
     if (!user.address) return toast("nema adrese");
     if (cart.products.length > 0) {
       try {
@@ -141,12 +127,10 @@ const Orders = () => {
           userId: user._id,
           products: cart.products.map((item, i) => ({
             productId: item._id,
-            size: document.getElementById("size" + i).value.split(",")[2],
-            price: parseFloat(
-              document.getElementById("size" + i).value.split(",")[0]
-            ).toFixed(2),
+            size: getProductSize(i),
+            price: getProductPrice(i).toFixed(2),
           })),
-          amount: total,
+          amount: getTotal(),
           address: user.address,
           date: Date.now(),
         });
@@ -159,18 +143,44 @@ const Orders = () => {
       toast.warning("cart empty");
     }
   };
-  const handleChange = (e) => {
-    const target = e.target.value.split(",");
-    document.getElementById(target[1] + target[3]).innerText = "€" + target[0];
-    let total = 0;
+  const handleChange = (i) => {
+    //update price
+    document.getElementById("price" + i).innerText =
+      "€" + getProductPrice(i).toFixed(2);
+    //update total
+    document.getElementById("total").innerText = "Ukupno:" + getTotal() + "€";
+  };
+
+  const getProductPrice = (cartIndex) => {
+    return cart.products[cartIndex].price[
+      document.getElementById("size" + cartIndex)?.value
+    ];
+  };
+  const getProductSize = (cartIndex) => {
+    return cart.products[cartIndex].size[
+      document.getElementById("size" + cartIndex)?.value
+    ];
+  };
+
+  const getTotal = () => {
+    var total = 0;
     cart.products.map(
       (pizza, i) =>
         (total += parseFloat(
-          document.getElementById("size" + i).value.split(",")[0]
+          pizza.price[document.getElementById("size" + i)?.value].toFixed(2)
         ))
     );
-    setTotalCart(total.toFixed(2));
+    return total;
   };
+
+  useEffect(() => {
+    cart.products.map(
+      (pizza, i) =>
+        (document.getElementById("price" + i).innerText =
+          "€" +
+          pizza.price[document.getElementById("size" + i)?.value].toFixed(2))
+    );
+  }, [cart.products]);
 
   return (
     <div>
@@ -181,8 +191,8 @@ const Orders = () => {
         <TopCreateOrder>
           {cart.products.length > 0 && (
             <Info>
-              {cart.products.map((product, prodi) => (
-                <Product key={prodi}>
+              {cart.products.map((product, cartIndex) => (
+                <Product key={cartIndex}>
                   <ProductDetail>
                     <Image src={product?.img} />
                     <Details>
@@ -191,20 +201,13 @@ const Orders = () => {
                       </ProductName>
 
                       <FilterSize
-                        id={"size" + prodi}
+                        id={"size" + cartIndex}
                         placeholder="Select option"
-                        onChange={handleChange}
+                        defaultValue="1"
+                        onChange={() => handleChange(cartIndex)}
                       >
                         {product.size.map((size, i) => (
-                          <FilterSizeOption
-                            key={i}
-                            value={[
-                              product.price[i].toFixed(2),
-                              product._id,
-                              size,
-                              prodi,
-                            ]}
-                          >
+                          <FilterSizeOption key={i} value={i}>
                             {size}
                           </FilterSizeOption>
                         ))}
@@ -212,18 +215,23 @@ const Orders = () => {
                     </Details>
                   </ProductDetail>
                   <PriceDetail>
-                    <ProductPrice id={product._id + prodi}>
-                      €{product.price[0].toFixed(2)}
+                    <ProductPrice id={"price" + cartIndex}>
+                      €{getProductPrice(cartIndex)}
                     </ProductPrice>
                     <RemoveItemButton
-                      onClick={() => emptyCartByProduct(product)}
+                      onClick={() => emptyCartByIndex(cartIndex)}
                     >
                       delete
+                    </RemoveItemButton>
+                    <RemoveItemButton
+                      onClick={() => dispatch(addProduct(product))}
+                    >
+                      add
                     </RemoveItemButton>
                   </PriceDetail>
                 </Product>
               ))}
-              <TotalRow>Ukupno:{totalCart} $</TotalRow>
+              <TotalRow id={"total"}>Ukupno:{getTotal()} €</TotalRow>
               <OrderButtons>
                 <button onClick={() => dispatch(clearCart())}>
                   clear cart
