@@ -165,7 +165,7 @@ const Orders = () => {
       (pizza, i) =>
         (total += parseFloat(
           pizza.price[document.getElementById("size" + i)?.value]
-        ))
+        ).toFixed(2))
     );
     return total;
   };
