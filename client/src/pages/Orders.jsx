@@ -164,7 +164,7 @@ const Orders = () => {
     cart.products.map(
       (pizza, i) =>
         (total += parseFloat(
-          pizza.price[document.getElementById("size" + i)?.value]?.toFixed(2)
+          pizza.price[document.getElementById("size" + i)?.value]
         ))
     );
     return total;
