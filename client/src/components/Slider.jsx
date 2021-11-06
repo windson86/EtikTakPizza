@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import {getFavoritePizzas} from "../redux/ApiCalls"
+import { getFavoritePizzas } from "../redux/ApiCalls";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import { useHistory } from "react-router";
-//import { mobile } from "../responsive";
 
-const Container =styled.div`
-width: 100vw;
-
-display: flex;
-background-color: #bddbd7;
-
-`
-const Arrow =styled.div`
- width: 50px;
+const Container = styled.div`
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  max-width: 1200px;
+  border: 1px solid red;
+  background-color: #bddbd7;
+`;
+const Arrow = styled.div`
+  width: 50px;
   height: 50px;
   background-color: #fff7f7;
   border-radius: 50%;
@@ -30,25 +30,25 @@ const Arrow =styled.div`
   cursor: pointer;
   opacity: 0.5;
   z-index: 2;
-`
-const Wrapper =styled.div`
-height: 100%;
+`;
+const Wrapper = styled.div`
+  height: 100%;
 
   display: flex;
- 
+
   transition: all 1.5s ease;
   transform: translateX(${(props) => props.slideIndex * -100}vw);
-`
-const Slide =styled.div`
-width: 100vw;
+`;
+const Slide = styled.div`
+  width: 100vw;
   height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  
+
   background-color: #bddbd7;
-`
+`;
 
 const ImgContainer = styled.div`
   height: 100%;
@@ -56,27 +56,24 @@ const ImgContainer = styled.div`
   display: flex;
   margin: 20px 20px;
   border-radius: 30px;
-justify-content: center;
-align-items: center;
- 
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
-border-radius: 20%;
-width: 30vh;
+  border-radius: 20%;
+  width: 30vh;
   height: 30vh;
   background-color: white;
- 
 `;
 const InfoContainer = styled.div`
   align-items: center;
-  display:flex;
+  display: flex;
   width: 80vw;
   margin-bottom: 20px;
   flex-direction: column;
   background-color: #97ddd4;
   border-radius: 40px;
- 
 `;
 
 const Title = styled.h1`
@@ -99,42 +96,46 @@ const Button = styled.button`
 `;
 const Slider = () => {
   const history = useHistory();
-    const [slideIndex, setSlideIndex] = useState(0);
-    const dispatch = useDispatch();
-    
-    const pizzas = useSelector((state) => state.pizzas.pizzas);
-    const handleClick = (direction) => {
-        if (direction === "left") {
-          setSlideIndex(slideIndex > 0 ? slideIndex-1 : pizzas.length-1);
-        } else {
-          setSlideIndex(slideIndex < pizzas.length-1 ? slideIndex+1 : 0);
-        }
-      };
-     
-  
-    useEffect(() => {
-       getFavoritePizzas(dispatch)
-      }, [dispatch]);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const dispatch = useDispatch();
+
+  const pizzas = useSelector((state) => state.pizzas.pizzas);
+  const handleClick = (direction) => {
+    if (direction === "left") {
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : pizzas.length - 1);
+    } else {
+      setSlideIndex(slideIndex < pizzas.length - 1 ? slideIndex + 1 : 0);
+    }
+  };
+
+  useEffect(() => {
+    getFavoritePizzas(dispatch);
+  }, [dispatch]);
 
   return (
     <Container>
-        
-     <Arrow direction="left" onClick={() => handleClick("left")}>
+      <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-       { pizzas.map((pizza,i)=>( 
-       <Slide  key={i}>
-           <ImgContainer>
+        {pizzas.map((pizza, i) => (
+          <Slide key={i}>
+            <ImgContainer>
               <Image src={pizza.img} />
             </ImgContainer>
             <InfoContainer>
-                
               <Title>{pizza.name}</Title>
               <Desc>{pizza.desc}</Desc>
-              <Button onClick={()=>{history.push('/menu')}}>Menu</Button>
+              <Button
+                onClick={() => {
+                  history.push("/menu");
+                }}
+              >
+                Menu
+              </Button>
             </InfoContainer>
-        </Slide>))}
+          </Slide>
+        ))}
       </Wrapper>
       <Arrow direction="right" onClick={() => handleClick("right")}>
         <ArrowRightOutlined />

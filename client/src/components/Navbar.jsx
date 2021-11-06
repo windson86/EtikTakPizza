@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
+import { MenuBook } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-//import { desktop } from '../responsive'
+//import { desktop } from "../responsive";
 import { useHistory } from "react-router";
 
 import { useDispatch } from "react-redux";
@@ -10,30 +10,30 @@ import { logout } from "../redux/userRedux";
 import { placeName } from "../constans";
 
 const Container = styled.div`
-  height: 15vh;
+  height: 8vh;
   width: 100vw;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #bddbd7;
+`;
+
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-
-const Wrapper = styled.div`
-  height: 70%;
-  width: 95%;
-  background-color: #f5a6a6;
-  display: flex;
-  border-radius: 20px;
-  justify-content: space-between;
-  align-items: center;
-`;
 const Left = styled.div`
-  height: 70%;
-  width: 45%;
-  display: flex;
+  height: 100%;
+  width: 40%;
 
-  justify-content: space-evenly;
+  display: flex;
+  align-content: center;
   align-items: center;
+  justify-content: center;
 `;
 
 const Logo = styled.h1`
@@ -42,25 +42,28 @@ const Logo = styled.h1`
   font-size: 3vw;
 `;
 const Center = styled.div`
-  width: 10%;
+  width: 20%;
+  height: 100%;
+  display: flex;
   align-items: center;
+  justify-content: center;
 `;
 const Right = styled.div`
-  width: 45%;
+  width: 40%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 `;
 const NavItem = styled.div`
   cursor: pointer;
-  width: 20vw;
-  height: 5vh;
-
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  font-size: 5.5vw;
-`;
-const Test = styled.div`
-  cursor: pointer;
+  font-size: 4vw;
 `;
 
 const Navbar = () => {
@@ -82,7 +85,9 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           {isLogged && (
-            <NavItem onClick={() => history.push("/menu")}>Menu</NavItem>
+            <NavItem onClick={() => history.push("/menu")}>
+              <MenuBook /> Menu
+            </NavItem>
           )}
 
           {isLogged && (
@@ -110,7 +115,7 @@ const Navbar = () => {
               {user.firstName}
             </NavItem>
           )}
-          {isLogged && <Test onClick={() => handleLogout()}>Logout</Test>}
+          {isLogged && <NavItem onClick={() => handleLogout()}>Logout</NavItem>}
         </Right>
       </Wrapper>
     </Container>
