@@ -113,10 +113,7 @@ const Orders = () => {
           cart: cart,
         })
         .then();
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const CreateOrder = async () => {
@@ -128,7 +125,7 @@ const Orders = () => {
           products: cart.products.map((item, i) => ({
             productId: item._id,
             size: getProductSize(i),
-            price: getProductPrice(i).toFixed(2),
+            price: getProductPrice(i)?.toFixed(2),
           })),
           amount: getTotal(),
           address: user.address,
@@ -146,7 +143,7 @@ const Orders = () => {
   const handleChange = (i) => {
     //update price
     document.getElementById("price" + i).innerText =
-      "€" + getProductPrice(i).toFixed(2);
+      "€" + getProductPrice(i)?.toFixed(2);
     //update total
     document.getElementById("total").innerText = "Ukupno:" + getTotal() + "€";
   };
@@ -167,7 +164,7 @@ const Orders = () => {
     cart.products.map(
       (pizza, i) =>
         (total += parseFloat(
-          pizza.price[document.getElementById("size" + i)?.value].toFixed(2)
+          pizza.price[document.getElementById("size" + i)?.value]?.toFixed(2)
         ))
     );
     return total;
